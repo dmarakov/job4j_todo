@@ -7,4 +7,6 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
     <include file="scripts/001_ddl_create_task_table.sql" relativeToChangelogFile="true"/>
     <include file="scripts/002_ddl_create_user_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/003_dml_add_user_column_to_task_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/004_dml_add_foreign_key_for_user_id.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

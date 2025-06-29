@@ -2,12 +2,14 @@ package ru.job4j.todo.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "users")
+@ToString
 public class User {
 
     @Id
@@ -16,6 +18,7 @@ public class User {
     private int id;
     private String name;
     private String login;
+    @ToString.Exclude
     private String password;
 
     public User() {
