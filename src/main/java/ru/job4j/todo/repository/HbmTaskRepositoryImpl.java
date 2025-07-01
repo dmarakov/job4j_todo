@@ -26,7 +26,6 @@ public class HbmTaskRepositoryImpl implements TaskRepository, AutoCloseable {
         Session session = sf.openSession();
         try {
             session.beginTransaction();
-            task.setCreated(LocalDateTime.now());
             session.save(task);
             session.getTransaction().commit();
         } catch (Exception e) {
@@ -103,7 +102,7 @@ public class HbmTaskRepositoryImpl implements TaskRepository, AutoCloseable {
         List<Task> rsl = new ArrayList<>();
         try {
             session.beginTransaction();
-            rsl = session.createQuery("FROM Task", Task.class).list();
+            rsl = session.createQuery("FROM Task f JOIN FETCH f.priority", Task.class).list();
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();

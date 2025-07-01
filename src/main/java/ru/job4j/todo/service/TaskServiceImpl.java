@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.repository.TaskRepository;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task save(Task task) {
+        task.setCreated(LocalDateTime.now());
         return repository.save(task);
     }
 
@@ -26,6 +28,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public boolean update(Task task) {
+        task.setCreated(LocalDateTime.now());
         return repository.update(task);
     }
 

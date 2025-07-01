@@ -20,14 +20,19 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "priority_id")
+    private Priority priority;
 
     public Task() {
     }
 
-    public Task(int id, String description, LocalDateTime created, boolean done) {
+    public Task(int id, String description, LocalDateTime created, boolean done, User user, Priority priority) {
         this.id = id;
         this.description = description;
         this.created = created;
         this.done = done;
+        this.user = user;
+        this.priority = priority;
     }
 }
