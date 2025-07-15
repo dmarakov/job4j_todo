@@ -3,15 +3,16 @@ package ru.job4j.todo.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.job4j.todo.model.User;
 import ru.job4j.todo.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,8 +22,23 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/register")
-    public String getRegisterPage() {
+    public String getRegisterPage(Model model) {
+        List<String> zones = new ArrayList<>(ZoneId.getAvailableZoneIds());
+        Collections.sort(zones); // опционально — для удобства сортировки
+        model.addAttribute("zones", zones);
+        model.addAttribute("user", new User()); // если используешь th:object в форме
         return "users/register";
+    }
+
+    @PostMapping("/register")
+    public String register(Model model, @ModelAttribute User user, @RequestParam("timeZone") String timeZone) {
+        user.setTimeZone(timeZone);
+        var savedUser = userService.save(user);
+        if (savedUser.isEmpty()) {
+            model.addAttribute("message", "Пользователь с такой почтой уже существует");
+            return "errors/404";
+        }
+        return "redirect:/users/register";
     }
 
     @GetMapping("/login")
@@ -34,16 +50,6 @@ public class UserController {
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/users/login";
-    }
-
-    @PostMapping("/register")
-    public String register(Model model, @ModelAttribute User user) {
-        var savedUser = userService.save(user);
-        if (savedUser.isEmpty()) {
-            model.addAttribute("message", "Пользователь с такой почтой уже существует");
-            return "errors/404";
-        }
-        return "redirect:/users/register";
     }
 
     @PostMapping("/login")

@@ -6,8 +6,11 @@ import ru.job4j.todo.model.Task;
 import ru.job4j.todo.repository.TaskRepository;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.TimeZone;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +20,12 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task save(Task task) {
-        task.setCreated(LocalDateTime.now());
+        String zoneId = task.getUser().getTimeZone() != null ? task.getUser().getTimeZone()
+                : TimeZone.getDefault().getID();
+        ZoneId zone = ZoneId.of(zoneId);
+        ZonedDateTime zonedDateTime = ZonedDateTime.now(zone);
+        LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
+        task.setCreated(localDateTime);
         return repository.save(task);
     }
 

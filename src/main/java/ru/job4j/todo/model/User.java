@@ -1,6 +1,9 @@
 package ru.job4j.todo.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
@@ -18,4 +21,5 @@ public class User {
     private String name;
     private String login;
     private String password;
+    private String timeZone;
 }

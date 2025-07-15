@@ -14,4 +14,5 @@
     <include file="scripts/007_ddl_create_categories_table.sql" relativeToChangelogFile="true"/>
     <include file="scripts/008_ddl_create_task_to_category_table.sql" relativeToChangelogFile="true"/>
     <include file="scripts/009_dml_insert_categories_data.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/010_dml_add_timezone_column_to_users.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>
