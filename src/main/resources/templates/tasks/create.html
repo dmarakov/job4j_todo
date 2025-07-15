@@ -36,6 +36,15 @@
                     </option>
                 </select>
             </div>
+            <div class="mb-3">
+                <label for="categories" class="form-label"><b>Категории</b></label>
+                <select class="form-select" id="categories" name="categoryIds" multiple>
+                    <option th:each="category : ${categories}"
+                            th:value="${category.id}"
+                            th:text="${category.name}">
+                    </option>
+                </select>
+            </div>
             <div class="mb-3 row">
                 <div class="col-6"></div>
                 <div class="col-6">

@@ -11,4 +11,7 @@
     <include file="scripts/004_dml_add_foreign_key_for_user_id.sql" relativeToChangelogFile="true"/>
     <include file="scripts/005_ddl_create_priority_table.sql" relativeToChangelogFile="true"/>
     <include file="scripts/006_dml_add_priority_column_to_task.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/007_ddl_create_categories_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/008_ddl_create_task_to_category_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/009_dml_insert_categories_data.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

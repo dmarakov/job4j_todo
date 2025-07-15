@@ -4,12 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.job4j.todo.model.Category;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.model.User;
+import ru.job4j.todo.service.CategoryService;
 import ru.job4j.todo.service.PriorityService;
 import ru.job4j.todo.service.TaskService;
-import ru.job4j.todo.service.UserService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -19,6 +21,7 @@ public class TaskController {
 
     private final TaskService taskService;
     private final PriorityService priorityService;
+    private final CategoryService categoryService;
 
     @GetMapping
     public String getAll(Model model) {
@@ -42,13 +45,19 @@ public class TaskController {
     public String getCreationPage(Model model) {
         model.addAttribute("task", new Task());
         model.addAttribute("priorities", priorityService.getAll());
+        model.addAttribute("categories", categoryService.getAll());
         return "tasks/create";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute Task task, @SessionAttribute("user") User user, Model model) {
+    public String create(@ModelAttribute Task task,
+                         @RequestParam("categoryIds") List<Integer> categoryIds,
+                         @SessionAttribute("user") User user,
+                         Model model) {
         try {
             task.setUser(user);
+            List<Category> categories = categoryService.findByIds(categoryIds);
+            task.setCategories(categories);
             taskService.save(task);
             return "redirect:/tasks";
         } catch (Exception exception) {

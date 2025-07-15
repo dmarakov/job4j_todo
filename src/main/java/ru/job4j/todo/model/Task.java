@@ -4,8 +4,12 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
+@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table(name = "tasks")
 public class Task {
@@ -23,16 +27,11 @@ public class Task {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "priority_id")
     private Priority priority;
-
-    public Task() {
-    }
-
-    public Task(int id, String description, LocalDateTime created, boolean done, User user, Priority priority) {
-        this.id = id;
-        this.description = description;
-        this.created = created;
-        this.done = done;
-        this.user = user;
-        this.priority = priority;
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "task_to_category",
+            joinColumns = {@JoinColumn(name = "task_id")},
+            inverseJoinColumns = {@JoinColumn(name = "category_id")}
+    )
+    private List<Category> categories = new ArrayList<>();
 }
