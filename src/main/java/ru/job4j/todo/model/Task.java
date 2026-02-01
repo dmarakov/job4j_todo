@@ -17,7 +17,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private int id;
+    private Integer id;
     private String description;
     private LocalDateTime created;
     private boolean done;
@@ -29,9 +29,9 @@ public class Task {
     private Priority priority;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "task_to_category",
-            joinColumns = {@JoinColumn(name = "task_id")},
-            inverseJoinColumns = {@JoinColumn(name = "category_id")}
+        name = "task_to_category",
+        joinColumns = {@JoinColumn(name = "task_id")},
+        inverseJoinColumns = {@JoinColumn(name = "category_id")}
     )
     private List<Category> categories = new ArrayList<>();
 }
